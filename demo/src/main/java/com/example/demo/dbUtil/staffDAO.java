@@ -1,12 +1,15 @@
 package com.example.demo.dbUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.sql.DataSource;
+import java.sql.ResultSet;
 
 import com.example.demo.model.staff;
 
@@ -25,21 +28,19 @@ import com.example.demo.model.staff;
 
 @Repository
 public class staffDAO {
-    @Autowired
-    DataSource dataSource;
+    private JdbcTemplate jdbcTemplate;
 
+    public void setDataSource(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+      }
     // Insert staff into staff table
     public int insertStaff (staff staff) {
         int numRowsInserted = 0;
 
-        try (Connection connection = dataSource.getConnection()) {
+        try (Connection connection = jdbcTemplate.getDataSource().getConnection()) {
             String sql = "INSERT INTO staff (staff_id, name, dept, section) VALUES (?,?,?,?)";
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, staff.getStaff_id());
-            stmt.setString(2, staff.getName());
-            stmt.setString(3, staff.getDept());
-            stmt.setString(4, staff.getSection());
-            numRowsInserted = stmt.executeUpdate();
+            Object[] params = {staff.getStaff_id(), staff.getName(), staff.getDept(), staff.getSection()};
+            numRowsInserted = jdbcTemplate.update(sql, params);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -50,18 +51,21 @@ public class staffDAO {
 
     // Get staff from staff table
     public staff getStaff (String staff_id) {
-        staff staff = new staff();
-
-        try (Connection connection = dataSource.getConnection()) {
+        staff staff = null;
+    
+        try (Connection connection = jdbcTemplate.getDataSource().getConnection()) {
             String sql = "SELECT * FROM staff WHERE staff_id = ?";
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, staff_id);
-            stmt.executeQuery();
-
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                staff = new staff(rs.getString("staff_id"), rs.getString("name"), rs.getString("dept"), rs.getString("section"));
+            }
+    
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+    
         return staff;
     }
 }
