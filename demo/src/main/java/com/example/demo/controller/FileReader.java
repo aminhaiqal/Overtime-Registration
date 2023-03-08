@@ -111,7 +111,6 @@ public class FileReader {
 
     public boolean parseBoolean(String s) {
         double d = Double.parseDouble(s);
-        System.out.println(d);
         return d != 0.0;
     }
 }

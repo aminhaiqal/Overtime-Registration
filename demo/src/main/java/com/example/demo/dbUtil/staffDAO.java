@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
 import javax.sql.DataSource;
 
 import com.example.demo.model.staff;
@@ -27,13 +26,13 @@ import com.example.demo.model.staff;
 @Repository
 public class staffDAO {
     @Autowired
-    private DataSource DataSource;
-    
+    DataSource dataSource;
+
     // Insert staff into staff table
     public int insertStaff (staff staff) {
         int numRowsInserted = 0;
 
-        try (Connection connection = DataSource.getConnection()) {
+        try (Connection connection = dataSource.getConnection()) {
             String sql = "INSERT INTO staff (staff_id, name, dept, section) VALUES (?,?,?,?)";
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, staff.getStaff_id());
@@ -53,7 +52,7 @@ public class staffDAO {
     public staff getStaff (String staff_id) {
         staff staff = new staff();
 
-        try (Connection connection = DataSource.getConnection()) {
+        try (Connection connection = dataSource.getConnection()) {
             String sql = "SELECT * FROM staff WHERE staff_id = ?";
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, staff_id);
