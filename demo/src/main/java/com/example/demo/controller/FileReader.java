@@ -81,7 +81,7 @@ public class FileReader {
         try (workbook) {}
 
         // Display response
-        System.out.println(sb.toString());
+        //System.out.println(sb.toString());
 
         return "";
     }
@@ -97,11 +97,6 @@ public class FileReader {
         String staff_department = (result[3]);
         String staff_section = (result[5]);
 
-        System.out.println(staff_id);
-        System.out.println(staff_name);
-        System.out.println(staff_department);
-        System.out.println(staff_section);
-
         Boolean Monday = parseBoolean(result[9]);
         Boolean Tuesday = parseBoolean(result[10]);
         Boolean Wednesday = parseBoolean(result[11]);
@@ -109,14 +104,6 @@ public class FileReader {
         Boolean Friday = parseBoolean(result[13]);
         Boolean Saturday = parseBoolean(result[14]);
         Boolean Sunday = parseBoolean(result[15]);
-
-        System.out.println(Monday);
-        System.out.println(Tuesday);
-        System.out.println(Wednesday);
-        System.out.println(Thursday);
-        System.out.println(Friday);
-        System.out.println(Saturday);
-        System.out.println(Sunday);
 
         new DataLoading(staff_id, staff_name, staff_department, staff_section, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday);
 
