@@ -58,7 +58,23 @@ public class TableLoader {
                     + ")");
             System.out.println("Table 'overtime' created");
         }
-        // Register tables
-        // Unregister tables
+        if (!tables.contains("registered")){
+            jdbcTemplate.execute("CREATE TABLE registered ("
+                    + "staff_id VARCHAR(22) NOT NULL,"
+                    + "date DATE NOT NULL,"
+                    + "PRIMARY KEY (staff_id),"
+                    + "FOREIGN KEY (staff_id) REFERENCES staff(staff_id)"
+                    + ")");
+            System.out.println("Table 'registered' created");
+        }
+        if (!tables.contains("unregistered")){
+            jdbcTemplate.execute("CREATE TABLE unregistered ("
+                    + "staff_id VARCHAR(22) NOT NULL,"
+                    + "date DATE NOT NULL,"
+                    + "PRIMARY KEY (staff_id),"
+                    + "FOREIGN KEY (staff_id) REFERENCES staff(staff_id)"
+                    + ")");
+            System.out.println("Table 'unregistered' created");
+        }
     }
 }
