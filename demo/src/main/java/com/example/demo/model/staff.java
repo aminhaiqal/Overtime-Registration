@@ -6,8 +6,6 @@ public class staff {
     private String dept;
     private String section;
 
-    public staff() {}
-
     public staff(String staff_id, String name, String dept, String section) {
         this.staff_id = staff_id;
         this.name = name;

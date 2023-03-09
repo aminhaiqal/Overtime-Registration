@@ -6,10 +6,10 @@ import com.example.demo.dbUtil.staffDAO;
 public class DataQuering {
     public DataQuering(String staff_id) {
 
-        staffDAO staffDAO = new staffDAO();
+        /*staffDAO staffDAO = new staffDAO();
         staffDAO.getStaff(staff_id);
 
         overtimeDAO overtimeDAO = new overtimeDAO();
-        overtimeDAO.getOvertime(staff_id);
+        overtimeDAO.getOvertime(staff_id);*/
     }
 }
