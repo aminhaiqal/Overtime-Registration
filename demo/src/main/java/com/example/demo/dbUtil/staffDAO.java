@@ -28,23 +28,25 @@ import com.example.demo.model.staff;
 
 @Repository
 public class staffDAO {
-    private JdbcTemplate jdbcTemplate;
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
-    public void setDataSource(DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
-      }
     // Insert staff into staff table
     public int insertStaff (staff staff) {
         int numRowsInserted = 0;
 
-        try (Connection connection = jdbcTemplate.getDataSource().getConnection()) {
+        String sql = "INSERT INTO staff (staff_id, name, dept, section) VALUES (?,?,?,?)";
+        Object[] params = {staff.getStaff_id(), staff.getName(), staff.getDept(), staff.getSection()};
+        numRowsInserted = jdbcTemplate.update(sql, params);
+        
+        /*try(Connection connection = jdbcTemplate.getDataSource().getConnection()) {
             String sql = "INSERT INTO staff (staff_id, name, dept, section) VALUES (?,?,?,?)";
             Object[] params = {staff.getStaff_id(), staff.getName(), staff.getDept(), staff.getSection()};
             numRowsInserted = jdbcTemplate.update(sql, params);
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
 
         return numRowsInserted;
     }
