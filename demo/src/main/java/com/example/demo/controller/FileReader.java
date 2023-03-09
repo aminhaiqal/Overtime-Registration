@@ -34,7 +34,6 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 public class FileReader {
     @PostMapping("/upload")
     public String readExcelFile(@RequestParam("file") MultipartFile file) throws IOException {
-        int startRow = 3;
         // Read the Excel file using Apache POI
         Workbook workbook = WorkbookFactory.create(file.getInputStream());
 
@@ -43,12 +42,12 @@ public class FileReader {
 
         StringBuilder sb = new StringBuilder();
         // Get the starting row
-        Row firstRow = sheet.getRow(startRow);
+        Row currentRow = sheet.getRow(3);
         
         // Loop through the rows in the sheet
-        for (Row row = firstRow; row != null;) {
+        while (currentRow != null) {
             // Loop through the cells in the row
-            for (Cell cell : row) {
+            for (Cell cell : currentRow) {
                 switch (cell.getCellType()) {
                     case STRING:
                         sb.append(cell.getStringCellValue()).append("\t");
@@ -73,9 +72,8 @@ public class FileReader {
             //sb.append("\n");
             String[] result = splitStringBuilder(sb, "\t");
             assignString(result);
-
-            System.out.println("\n");
-            break;
+            sb.setLength(0);
+            currentRow = sheet.getRow(currentRow.getRowNum() + 1);
         }
         // Close the workbook using try-with-resources
         try (workbook) {}
@@ -106,11 +104,16 @@ public class FileReader {
         Boolean Sunday = parseBoolean(result[15]);
 
         new DataLoading(staff_id, staff_name, staff_department, staff_section, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday);
-
     }
 
     public boolean parseBoolean(String s) {
-        double d = Double.parseDouble(s);
-        return d != 0.0;
+        if (s == null || s.isEmpty()) {
+            return false;
+        }
+        else {
+            double d = Double.parseDouble(s);
+            return d != 0.0;
+        }
+        
     }
 }

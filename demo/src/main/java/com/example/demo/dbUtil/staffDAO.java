@@ -1,17 +1,12 @@
 package com.example.demo.dbUtil;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Controller;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import javax.sql.DataSource;
-import java.sql.ResultSet;
-
 import com.example.demo.model.staff;
+import com.example.demo.config.DataSourceConfig;
 
 /*
  * ____________________________________________________________
@@ -28,46 +23,32 @@ import com.example.demo.model.staff;
 
 @Repository
 public class staffDAO {
-    @Autowired
-    JdbcTemplate jdbcTemplate;
+    JdbcTemplate jdbcTemplate = new JdbcTemplate(DataSourceConfig.getDataSource());
 
     // Insert staff into staff table
-    public int insertStaff (staff staff) {
-        int numRowsInserted = 0;
-
-        String sql = "INSERT INTO staff (staff_id, name, dept, section) VALUES (?,?,?,?)";
-        Object[] params = {staff.getStaff_id(), staff.getName(), staff.getDept(), staff.getSection()};
-        numRowsInserted = jdbcTemplate.update(sql, params);
-        
-        /*try(Connection connection = jdbcTemplate.getDataSource().getConnection()) {
+    public int insertStaff(staff staff) {
+        try {
             String sql = "INSERT INTO staff (staff_id, name, dept, section) VALUES (?,?,?,?)";
             Object[] params = {staff.getStaff_id(), staff.getName(), staff.getDept(), staff.getSection()};
-            numRowsInserted = jdbcTemplate.update(sql, params);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
-
-        return numRowsInserted;
+            return jdbcTemplate.update(sql, params);
+        } catch (DuplicateKeyException e) {
+            return 0; // Skip the row and return 0
+        } catch (Exception e) {
+            System.out.println("Error inserting staff: " + e.getMessage());
+            return 0;
+        }
     }
 
     // Get staff from staff table
     public staff getStaff (String staff_id) {
         staff staff = null;
-    
-        try (Connection connection = jdbcTemplate.getDataSource().getConnection()) {
-            String sql = "SELECT * FROM staff WHERE staff_id = ?";
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, staff_id);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                staff = new staff(rs.getString("staff_id"), rs.getString("name"), rs.getString("dept"), rs.getString("section"));
-            }
-    
-        } catch (SQLException e) {
-            e.printStackTrace();
+        String sql = "SELECT * FROM staff WHERE staff_id = ?";
+
+        try{
+            staff = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<staff>(staff.class), staff_id);
+            return staff;
+        } catch (Exception e) {
+            return null;
         }
-    
-        return staff;
     }
 }
