@@ -1,15 +1,19 @@
 package com.example.demo.controller;
 
-import com.example.demo.dbUtil.overtimeDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 import com.example.demo.dbUtil.staffDAO;
 
+@Controller
 public class DataQuering {
+    @Autowired
+    private staffDAO staffDAO;
+    
+    public DataQuering() {}
     public DataQuering(String staff_id) {
 
-        /*staffDAO staffDAO = new staffDAO();
+        staffDAO = new staffDAO();
         staffDAO.getStaff(staff_id);
-
-        overtimeDAO overtimeDAO = new overtimeDAO();
-        overtimeDAO.getOvertime(staff_id);*/
     }
 }

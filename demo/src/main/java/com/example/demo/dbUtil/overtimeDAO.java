@@ -3,9 +3,16 @@ package com.example.demo.dbUtil;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
+
 import org.springframework.dao.DuplicateKeyException;
 
 import com.example.demo.model.overtime;
+
+import jakarta.annotation.Generated;
+
 import com.example.demo.config.DataSourceConfig;
 
 @Repository
@@ -26,13 +33,15 @@ public class overtimeDAO {
         }
     }
 
+
     // Get overtime from overtime table
-    public overtime getOvertime(String staff_id) {
-        overtime overtime = null;
-        String sql = "SELECT * FROM overtime WHERE staff_id = ?";
+    @GetMapping("/overtime")
+    public List<overtime>getOvertime() {
+        List<overtime>overtimelist = null;
+        String sql = "SELECT * FROM overtime";
         try {
-            overtime = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<overtime>(overtime.class), staff_id);
-            return overtime;
+            overtimelist = jdbcTemplate.query(sql, new BeanPropertyRowMapper<overtime>(overtime.class));
+            return overtimelist;
         } catch (Exception e) {
             return null;
         }
