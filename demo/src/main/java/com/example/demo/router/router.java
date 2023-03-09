@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class router {
     @GetMapping("/")
     public String index(){
-        return "employee";
+        return "index";
     }
 
-    @GetMapping("/login")
-    public String overtimeRegistration(){
-        return "index";
+    @GetMapping("/employee")
+    public String employee(){
+        return "employee";
     }
 }
