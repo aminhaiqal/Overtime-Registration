@@ -21,12 +21,10 @@ public class overtimeDAO {
             String sql = "INSERT INTO overtime (staff_id, MON, TUE, WED, THU, FRI, SAT, SUN) VALUES (?,?,?,?,?,?,?,?)";
             Object[] params = { overtime.getStaff_id(), overtime.getMON(), overtime.getTUE(), overtime.getWED(), overtime.getTHU(), overtime.getFRI(), overtime.getSAT(), overtime.getSUN() };
             return jdbcTemplate.update(sql, params);
+            
         } catch (DuplicateKeyException e) {
             return 0; // Skip the row and return 0
-        } catch (Exception e) {
-            System.out.println("Error inserting overtime: " + e.getMessage());
-            return 0;
-        }
+        } 
     }
 
 

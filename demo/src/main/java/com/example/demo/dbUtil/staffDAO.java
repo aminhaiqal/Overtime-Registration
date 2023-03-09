@@ -34,11 +34,9 @@ public class staffDAO {
             String sql = "INSERT INTO staff (staff_id, name, dept, section) VALUES (?,?,?,?)";
             Object[] params = {staff.getStaff_id(), staff.getName(), staff.getDept(), staff.getSection()};
             return jdbcTemplate.update(sql, params);
+            
         } catch (DuplicateKeyException e) {
             return 0; // Skip the row and return 0
-        } catch (Exception e) {
-            System.out.println("Error inserting staff: " + e.getMessage());
-            return 0;
         }
     }
 
