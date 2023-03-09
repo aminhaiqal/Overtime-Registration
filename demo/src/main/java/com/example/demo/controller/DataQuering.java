@@ -19,7 +19,7 @@ public class DataQuering {
     @GetMapping("/overtime")
     @ResponseBody
     public List<overtime> getOvertime() {
-        List<overtime> overtimeList = overtimeDAO.getOvertime();
+        List<overtime> overtimeList = overtimeDAO.getOvertimeList();
         return overtimeList;
     }
 }

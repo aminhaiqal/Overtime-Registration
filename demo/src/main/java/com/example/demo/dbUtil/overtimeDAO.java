@@ -31,13 +31,12 @@ public class overtimeDAO {
 
 
     // Get overtime from overtime table
-    public List<overtime>getOvertime() {
+    public List<overtime>getOvertimeList() {
         List<overtime>overtimelist = new ArrayList<overtime>();
         
         try {
             String sql = "SELECT * FROM overtime";
             overtimelist = jdbcTemplate.query(sql, new BeanPropertyRowMapper<overtime>(overtime.class));
-            System.out.println("Getting overtime");
             
         } catch (Exception e) {
             e.printStackTrace();
