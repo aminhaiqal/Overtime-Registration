@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,14 +27,13 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
  * |  • The class also provides a few utility methods to help with parsing cell 
  * |    values and formatting dates.
  * |____________________________________________________________________________
- * |  • Code Complexity: O(n^2)
- * |____________________________________________________________________________
  */
 
 @RestController
 public class FileReader {
     @PostMapping("/upload")
-    public String readExcelFile(@RequestParam("file") MultipartFile file) throws IOException {
+    @ResponseBody
+    public void readExcelFile(@RequestParam("file") MultipartFile file) throws IOException {
         // Read the Excel file using Apache POI
         Workbook workbook = WorkbookFactory.create(file.getInputStream());
 
@@ -69,7 +69,6 @@ public class FileReader {
                         sb.append("\t");
                 }
             }
-            //sb.append("\n");
             String[] result = splitStringBuilder(sb, "\t");
             assignString(result);
             sb.setLength(0);
@@ -78,10 +77,6 @@ public class FileReader {
         // Close the workbook using try-with-resources
         try (workbook) {}
 
-        // Display response
-        //System.out.println(sb.toString());
-
-        return "";
     }
 
     private String[] splitStringBuilder(StringBuilder sb, String delimiter) {
@@ -107,13 +102,6 @@ public class FileReader {
     }
 
     public boolean parseBoolean(String s) {
-        if (s == null || s.isEmpty()) {
-            return false;
-        }
-        else {
-            double d = Double.parseDouble(s);
-            return d != 0.0;
-        }
-        
+        return s != null && !s.isEmpty() && Double.parseDouble(s) != 0.0;
     }
 }

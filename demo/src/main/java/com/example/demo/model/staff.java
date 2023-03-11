@@ -13,6 +13,19 @@ public class staff {
         this.section = section;
     }
 
+    public void setStaff_id(String staff_id) {
+        this.staff_id = staff_id;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setDept(String dept) {
+        this.dept = dept;
+    }
+    public void setSection(String section) {
+        this.section = section;
+    }
+
     public String getStaff_id() {
         return staff_id;
     }

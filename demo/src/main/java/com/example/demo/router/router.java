@@ -16,7 +16,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class router {
     @GetMapping("/")
-    public String hello(){
+    public String index(){
         return "index";
+    }
+
+    @GetMapping("/employee")
+    public String employee(){
+        return "employee";
     }
 }

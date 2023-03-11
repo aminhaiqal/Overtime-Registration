@@ -23,6 +23,31 @@ public class overtime {
         this.SUN = SUN;
     }
 
+    public void setStaff_id(String staff_id) {
+        this.staff_id = staff_id;
+    }
+    public void setMON(boolean MON) {
+        this.MON = MON;
+    }
+    public void setTUE(boolean TUE) {
+        this.TUE = TUE;
+    }
+    public void setWED(boolean WED) {
+        this.WED = WED;
+    }
+    public void setTHU(boolean THU) {
+        this.THU = THU;
+    }
+    public void setFRI(boolean FRI) {
+        this.FRI = FRI;
+    }
+    public void setSAT(boolean SAT) {
+        this.SAT = SAT;
+    }
+    public void setSUN(boolean SUN) {
+        this.SUN = SUN;
+    }
+
     public String getStaff_id() {
         return staff_id;
     }

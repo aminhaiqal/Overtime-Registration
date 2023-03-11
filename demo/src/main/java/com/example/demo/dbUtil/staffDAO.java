@@ -5,6 +5,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.example.demo.model.staff;
 import com.example.demo.config.DataSourceConfig;
 
@@ -31,24 +34,23 @@ public class staffDAO {
             String sql = "INSERT INTO staff (staff_id, name, dept, section) VALUES (?,?,?,?)";
             Object[] params = {staff.getStaff_id(), staff.getName(), staff.getDept(), staff.getSection()};
             return jdbcTemplate.update(sql, params);
+            
         } catch (DuplicateKeyException e) {
             return 0; // Skip the row and return 0
-        } catch (Exception e) {
-            System.out.println("Error inserting staff: " + e.getMessage());
-            return 0;
         }
     }
 
     // Get staff from staff table
-    public staff getStaff (String staff_id) {
-        staff staff = null;
-        String sql = "SELECT * FROM staff WHERE staff_id = ?";
+    public List<staff> getStaffList() {
+        List<staff> staffList = new ArrayList<staff>();
 
         try{
-            staff = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<staff>(staff.class), staff_id);
-            return staff;
+            String sql = "SELECT * FROM staff";
+            staffList = jdbcTemplate.query(sql, new BeanPropertyRowMapper<staff>(staff.class));
+            
         } catch (Exception e) {
-            return null;
+            e.printStackTrace();
         }
+        return staffList;
     }
 }
