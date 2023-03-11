@@ -149,8 +149,8 @@
                     <p id="upload">Upload</p>
                     <div class="d-flex flex-column justify-content-center text-center" id="drop-area">
                         <img src="/assets/upload-cloud.svg" alt="" style="height: 32px;">
-                        <p id="instruction">Drag & Drop file or a <label for="fileInput" style="text-decoration: underline; color: blue;" onclick="uploadFile()">Browse</label></p>
-                        <input type="file" id="fileInput" style="display:none">
+                        <p id="instruction">Drag & Drop file or a <label for="fileInput" style="text-decoration: underline; color: blue;">Browse</label></p>
+                        <input type="file" id="fileInput" name="file" style="display:none" onchange="uploadFile()">
                         <p id="description">Supported formates: XLXS, XLS</p>   
                     </div>
                 </div>

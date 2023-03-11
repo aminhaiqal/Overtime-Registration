@@ -16,11 +16,11 @@ public class DataLoading {
     private overtimeDAO overtimeDAO;
     
     public DataLoading() {}
-    public DataLoading(String staff_id, String name, String dept, String section, 
+    public DataLoading(String staff_id, String name, String date_joined, String section,
                        Boolean MON, Boolean TUE, Boolean WED, Boolean THU, Boolean FRI, Boolean SAT, Boolean SUN) {
         
-        System.out.println("Staff Staff ID: " + staff_id + " Successfully Inserted");
-        staff staff = new staff(staff_id, name, dept, section);
+        System.out.println("Staff ID: " + staff_id + " Successfully Inserted");
+        staff staff = new staff(staff_id, name, date_joined, section);
         overtime overtime = new overtime(staff_id, MON, TUE, WED, THU, FRI, SAT, SUN);
 
         staffDAO = new staffDAO();

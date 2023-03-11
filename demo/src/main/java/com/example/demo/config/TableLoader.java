@@ -28,7 +28,28 @@ public class TableLoader {
 
     @EventListener
     public void onApplicationEvent(ContextRefreshedEvent event) {
+        dropTable();
         createTable();
+    }
+
+    public void dropTable() {
+        List<String> tables = jdbcTemplate.queryForList("SHOW TABLES", String.class);
+        if (tables.contains("overtime")) {
+            jdbcTemplate.execute("DROP TABLE overtime");
+            System.out.println("Table 'overtime' dropped");
+        }
+        if (tables.contains("registered")) {
+            jdbcTemplate.execute("DROP TABLE registered");
+            System.out.println("Table 'registered' dropped");
+        }
+        if (tables.contains("unregistered")) {
+            jdbcTemplate.execute("DROP TABLE unregistered");
+            System.out.println("Table 'unregistered' dropped");
+        }
+        if (tables.contains("staff")) {
+            jdbcTemplate.execute("DROP TABLE staff");
+            System.out.println("Table 'staff' dropped");
+        }
     }
 
     public void createTable() {
@@ -37,12 +58,13 @@ public class TableLoader {
             jdbcTemplate.execute("CREATE TABLE staff ("
                     + "staff_id VARCHAR(22) NOT NULL,"
                     + "name MEDIUMTEXT NOT NULL,"
-                    + "dept VARCHAR(55),"
+                    + "date_joined VARCHAR(22) NOT NULL,"
                     + "section VARCHAR(45) NOT NULL,"
                     + "PRIMARY KEY (staff_id)"
                     + ")");
             System.out.println("Table 'staff' created");
         }
+
         if (!tables.contains("overtime")) {
             jdbcTemplate.execute("CREATE TABLE overtime ("
                     + "staff_id VARCHAR(22) NOT NULL,"

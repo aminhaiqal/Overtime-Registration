@@ -31,8 +31,8 @@ public class staffDAO {
     // Insert staff into staff table
     public int insertStaff(staff staff) {
         try {
-            String sql = "INSERT INTO staff (staff_id, name, dept, section) VALUES (?,?,?,?)";
-            Object[] params = {staff.getStaff_id(), staff.getName(), staff.getDept(), staff.getSection()};
+            String sql = "INSERT INTO staff (staff_id, name, date_joined, section) VALUES (?,?,?,?)";
+            Object[] params = {staff.getStaff_id(), staff.getName(), staff.getDate_joined(), staff.getSection()};
             return jdbcTemplate.update(sql, params);
             
         } catch (DuplicateKeyException e) {
