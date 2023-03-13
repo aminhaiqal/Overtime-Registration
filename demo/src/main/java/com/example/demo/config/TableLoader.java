@@ -34,9 +34,25 @@ public class TableLoader {
 
     public void dropTable() {
         List<String> tables = jdbcTemplate.queryForList("SHOW TABLES", String.class);
-        if (tables.contains("overtime")) {
-            jdbcTemplate.execute("DROP TABLE overtime");
-            System.out.println("Table 'overtime' dropped");
+        if (tables.contains("week1")) {
+            jdbcTemplate.execute("DROP TABLE week1");
+            System.out.println("Table 'week1' dropped");
+        }
+        if (tables.contains("week2")) {
+            jdbcTemplate.execute("DROP TABLE week2");
+            System.out.println("Table 'week2' dropped");
+        }
+        if (tables.contains("week3")) {
+            jdbcTemplate.execute("DROP TABLE week3");
+            System.out.println("Table 'week3' dropped");
+        }
+        if (tables.contains("week4")) {
+            jdbcTemplate.execute("DROP TABLE week4");
+            System.out.println("Table 'week4' dropped");
+        }
+        if (tables.contains("week5")) {
+            jdbcTemplate.execute("DROP TABLE week5");
+            System.out.println("Table 'week5' dropped");
         }
         if (tables.contains("registered")) {
             jdbcTemplate.execute("DROP TABLE registered");
@@ -64,9 +80,8 @@ public class TableLoader {
                     + ")");
             System.out.println("Table 'staff' created");
         }
-
-        if (!tables.contains("overtime")) {
-            jdbcTemplate.execute("CREATE TABLE overtime ("
+        if (!tables.contains("week1")) {
+            jdbcTemplate.execute("CREATE TABLE week1 ("
                     + "staff_id VARCHAR(22) NOT NULL,"
                     + "MON BOOLEAN,"
                     + "TUE BOOLEAN,"
@@ -78,7 +93,67 @@ public class TableLoader {
                     + "PRIMARY KEY (staff_id),"
                     + "FOREIGN KEY (staff_id) REFERENCES staff(staff_id)"
                     + ")");
-            System.out.println("Table 'overtime' created");
+            System.out.println("Table 'week1' created");
+        }
+        if (!tables.contains("week2")) {
+            jdbcTemplate.execute("CREATE TABLE week2 ("
+                    + "staff_id VARCHAR(22) NOT NULL,"
+                    + "MON BOOLEAN,"
+                    + "TUE BOOLEAN,"
+                    + "WED BOOLEAN,"
+                    + "THU BOOLEAN,"
+                    + "FRI BOOLEAN,"
+                    + "SAT BOOLEAN,"
+                    + "SUN BOOLEAN,"
+                    + "PRIMARY KEY (staff_id),"
+                    + "FOREIGN KEY (staff_id) REFERENCES staff(staff_id)"
+                    + ")");
+            System.out.println("Table 'week2' created");
+        }
+        if (!tables.contains("week3")) {
+            jdbcTemplate.execute("CREATE TABLE week3 ("
+                    + "staff_id VARCHAR(22) NOT NULL,"
+                    + "MON BOOLEAN,"
+                    + "TUE BOOLEAN,"
+                    + "WED BOOLEAN,"
+                    + "THU BOOLEAN,"
+                    + "FRI BOOLEAN,"
+                    + "SAT BOOLEAN,"
+                    + "SUN BOOLEAN,"
+                    + "PRIMARY KEY (staff_id),"
+                    + "FOREIGN KEY (staff_id) REFERENCES staff(staff_id)"
+                    + ")");
+            System.out.println("Table 'week3' created");
+        }
+        if (!tables.contains("week4")) {
+            jdbcTemplate.execute("CREATE TABLE week4 ("
+                    + "staff_id VARCHAR(22) NOT NULL,"
+                    + "MON BOOLEAN,"
+                    + "TUE BOOLEAN,"
+                    + "WED BOOLEAN,"
+                    + "THU BOOLEAN,"
+                    + "FRI BOOLEAN,"
+                    + "SAT BOOLEAN,"
+                    + "SUN BOOLEAN,"
+                    + "PRIMARY KEY (staff_id),"
+                    + "FOREIGN KEY (staff_id) REFERENCES staff(staff_id)"
+                    + ")");
+            System.out.println("Table 'week4' created");
+        }
+        if (!tables.contains("week5")) {
+            jdbcTemplate.execute("CREATE TABLE week5 ("
+                    + "staff_id VARCHAR(22) NOT NULL,"
+                    + "MON BOOLEAN,"
+                    + "TUE BOOLEAN,"
+                    + "WED BOOLEAN,"
+                    + "THU BOOLEAN,"
+                    + "FRI BOOLEAN,"
+                    + "SAT BOOLEAN,"
+                    + "SUN BOOLEAN,"
+                    + "PRIMARY KEY (staff_id),"
+                    + "FOREIGN KEY (staff_id) REFERENCES staff(staff_id)"
+                    + ")");
+            System.out.println("Table 'week5' created");
         }
         if (!tables.contains("registered")){
             jdbcTemplate.execute("CREATE TABLE registered ("

@@ -7,24 +7,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.demo.dbUtil.overtimeDAO;
-import com.example.demo.model.overtime;
+import com.example.demo.dbUtil.weekDAO;
+import com.example.demo.model.week;
 import com.example.demo.dbUtil.staffDAO;
 import com.example.demo.model.staff;
 
 @Controller
 public class DataQuering {
     @Autowired
-    private overtimeDAO overtimeDAO;
+    private weekDAO weekDAO;
     @Autowired
     private staffDAO staffDAO;
     
     public DataQuering() {}
-    @GetMapping("/overtime")
+    @GetMapping("/week")
     @ResponseBody
-    public List<overtime> getOvertime() {
-        List<overtime> overtimeList = overtimeDAO.getOvertimeList();
-        return overtimeList;
+    public List<week> getweek() {
+        List<week> weekList = weekDAO.getweekList();
+        return weekList;
     }
 
     @GetMapping("/staff")
