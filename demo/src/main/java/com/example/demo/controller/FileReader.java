@@ -39,59 +39,34 @@ public class FileReader {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         // Read the Excel file using Apache POI
         Workbook workbook = WorkbookFactory.create(file.getInputStream());
-        StringBuilder sb = new StringBuilder();
-
-        /*for (int sheetIndex = 1; sheetIndex < 2; sheetIndex++) {
-            Sheet sheet = workbook.getSheetAt(sheetIndex);
-            Row currentRow = sheet.getRow(7);
-
-            try {
-                while (currentRow != null) {
-                    for (Cell cell : currentRow) {
-                        switch (cell.getCellType()) {
-                            case STRING:
-                                sb.append(cell.getStringCellValue()).append("\t");
-                                break;
-                            case NUMERIC:
-                                if (DateUtil.isCellDateFormatted(cell)) {
-                                    sb.append(dateFormat.format(cell.getDateCellValue())).append("\t");
-                                } else {
-                                    sb.append(cell.getNumericCellValue()).append("\t");
-                                }
-                                break;
-                            case BOOLEAN:
-                                sb.append(cell.getBooleanCellValue()).append("\t");
-                                break;
-                            case FORMULA:
-                                sb.append(cell.getCellFormula()).append("\t");
-                                break;
-                            default:
-                                sb.append("\t");
-                        }
-
-                        String[] result = null;
-                        result = splitStringBuilder(sb, "\t");
-                        System.out.println(sb.toString());
-                        //new AssignString(result);
-                        sb.setLength(0);
-                    }
-
-                    currentRow = sheet.getRow(currentRow.getRowNum() + 1);
-                }
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("End of Sheet");
+        Sheet sheet = workbook.getSheetAt(0);
+    
+        int firstRowNum = sheet.getFirstRowNum();
+        int lastRowNum = sheet.getLastRowNum();
+        int colsCount = sheet.getRow(firstRowNum).getPhysicalNumberOfCells();
+        String[][] data = new String[lastRowNum - firstRowNum + 1][colsCount];
+    
+        for (int i = firstRowNum; i <= lastRowNum; i++) {
+            Row row = sheet.getRow(i);
+            if (row == null) {
+                continue; // Skip blank rows
             }
-        }*/
-
-        try {
-            workbook.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            for (int j = 0; j < colsCount; j++) {
+                Cell cell = row.getCell(j);
+                if (cell == null) {
+                    data[i - firstRowNum][j] = null; // Assign null to empty cells
+                } else {
+                    String cellValue = cell != null ? cell.toString() : null;
+                    data[i - firstRowNum][j] = cellValue;
+                }
+            }
         }
+    
+        workbook.close();
+    
+        // Now you can use the "data" array which contains the values of each cell
+        // For example, to print the value of the cell in the second row and third column:
+        System.out.println(data[1][1]);
     }
 
-    private String[] splitStringBuilder(StringBuilder sb, String delimiter) {
-        String[] result = sb.toString().split(delimiter, -1);
-        return result;
-    }
 }
