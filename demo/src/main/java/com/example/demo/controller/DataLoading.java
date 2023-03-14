@@ -16,12 +16,14 @@ public class DataLoading {
     private weekDAO weekDAO;
     
     public DataLoading() {}
+    
     public DataLoading(staff staff, week[] weeks) {
         staffDAO = new staffDAO();
         staffDAO.insertStaff(staff);
-        for (week week : weeks) {
+
+        for (int i = 0; i < 5; i++) {
             weekDAO = new weekDAO();
-            weekDAO.insertWeek(week);
+            weekDAO.insertWeek(i + 1, weeks[i]);
         }
     }
 }

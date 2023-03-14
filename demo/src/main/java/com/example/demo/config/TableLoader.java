@@ -28,49 +28,26 @@ public class TableLoader {
 
     @EventListener
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        dropTable();
-        createTable();
+        //dropTable();
+        createStaffTable();
+        createWeekTables();
+        createRegisteredTable();
+        createUnregisteredTable();
     }
 
     public void dropTable() {
         List<String> tables = jdbcTemplate.queryForList("SHOW TABLES", String.class);
-        if (tables.contains("week1")) {
-            jdbcTemplate.execute("DROP TABLE week1");
-            System.out.println("Table 'week1' dropped");
-        }
-        if (tables.contains("week2")) {
-            jdbcTemplate.execute("DROP TABLE week2");
-            System.out.println("Table 'week2' dropped");
-        }
-        if (tables.contains("week3")) {
-            jdbcTemplate.execute("DROP TABLE week3");
-            System.out.println("Table 'week3' dropped");
-        }
-        if (tables.contains("week4")) {
-            jdbcTemplate.execute("DROP TABLE week4");
-            System.out.println("Table 'week4' dropped");
-        }
-        if (tables.contains("week5")) {
-            jdbcTemplate.execute("DROP TABLE week5");
-            System.out.println("Table 'week5' dropped");
-        }
-        if (tables.contains("registered")) {
-            jdbcTemplate.execute("DROP TABLE registered");
-            System.out.println("Table 'registered' dropped");
-        }
-        if (tables.contains("unregistered")) {
-            jdbcTemplate.execute("DROP TABLE unregistered");
-            System.out.println("Table 'unregistered' dropped");
-        }
-        if (tables.contains("staff")) {
-            jdbcTemplate.execute("DROP TABLE staff");
-            System.out.println("Table 'staff' dropped");
+        String[] tableNames = { "week1", "week2", "week3", "week4", "week5", "registered", "unregistered", "staff" };
+        for (String tableName : tableNames) {
+            if (tables.contains(tableName)) {
+                jdbcTemplate.execute("DROP TABLE " + tableName);
+                System.out.println("Table '" + tableName + "' dropped");
+            }
         }
     }
-
-    public void createTable() {
-        List<String> tables = jdbcTemplate.queryForList("SHOW TABLES", String.class);
-        if (!tables.contains("staff")) {
+    
+    private void createStaffTable() {
+        if (!tableExists("staff")) {
             jdbcTemplate.execute("CREATE TABLE staff ("
                     + "staff_id VARCHAR(22) NOT NULL,"
                     + "name MEDIUMTEXT NOT NULL,"
@@ -80,82 +57,31 @@ public class TableLoader {
                     + ")");
             System.out.println("Table 'staff' created");
         }
-        if (!tables.contains("week1")) {
-            jdbcTemplate.execute("CREATE TABLE week1 ("
-                    + "staff_id VARCHAR(22) NOT NULL,"
-                    + "MON BOOLEAN,"
-                    + "TUE BOOLEAN,"
-                    + "WED BOOLEAN,"
-                    + "THU BOOLEAN,"
-                    + "FRI BOOLEAN,"
-                    + "SAT BOOLEAN,"
-                    + "SUN BOOLEAN,"
-                    + "PRIMARY KEY (staff_id),"
-                    + "FOREIGN KEY (staff_id) REFERENCES staff(staff_id)"
-                    + ")");
-            System.out.println("Table 'week1' created");
+    }
+    
+    private void createWeekTables() {
+        for (int i = 1; i <= 5; i++) {
+            String tableName = "week" + i;
+            if (!tableExists(tableName)) {
+                jdbcTemplate.execute("CREATE TABLE " + tableName + " ("
+                        + "staff_id VARCHAR(22) NOT NULL,"
+                        + "FirstDay BOOLEAN,"
+                        + "SecondDay BOOLEAN,"
+                        + "ThirdDay BOOLEAN,"
+                        + "FourthDay BOOLEAN,"
+                        + "FifthDay BOOLEAN,"
+                        + "SixthDay BOOLEAN,"
+                        + "SeventhDay BOOLEAN,"
+                        + "PRIMARY KEY (staff_id),"
+                        + "FOREIGN KEY (staff_id) REFERENCES staff(staff_id)"
+                        + ")");
+                System.out.println("Table '" + tableName + "' created");
+            }
         }
-        if (!tables.contains("week2")) {
-            jdbcTemplate.execute("CREATE TABLE week2 ("
-                    + "staff_id VARCHAR(22) NOT NULL,"
-                    + "MON BOOLEAN,"
-                    + "TUE BOOLEAN,"
-                    + "WED BOOLEAN,"
-                    + "THU BOOLEAN,"
-                    + "FRI BOOLEAN,"
-                    + "SAT BOOLEAN,"
-                    + "SUN BOOLEAN,"
-                    + "PRIMARY KEY (staff_id),"
-                    + "FOREIGN KEY (staff_id) REFERENCES staff(staff_id)"
-                    + ")");
-            System.out.println("Table 'week2' created");
-        }
-        if (!tables.contains("week3")) {
-            jdbcTemplate.execute("CREATE TABLE week3 ("
-                    + "staff_id VARCHAR(22) NOT NULL,"
-                    + "MON BOOLEAN,"
-                    + "TUE BOOLEAN,"
-                    + "WED BOOLEAN,"
-                    + "THU BOOLEAN,"
-                    + "FRI BOOLEAN,"
-                    + "SAT BOOLEAN,"
-                    + "SUN BOOLEAN,"
-                    + "PRIMARY KEY (staff_id),"
-                    + "FOREIGN KEY (staff_id) REFERENCES staff(staff_id)"
-                    + ")");
-            System.out.println("Table 'week3' created");
-        }
-        if (!tables.contains("week4")) {
-            jdbcTemplate.execute("CREATE TABLE week4 ("
-                    + "staff_id VARCHAR(22) NOT NULL,"
-                    + "MON BOOLEAN,"
-                    + "TUE BOOLEAN,"
-                    + "WED BOOLEAN,"
-                    + "THU BOOLEAN,"
-                    + "FRI BOOLEAN,"
-                    + "SAT BOOLEAN,"
-                    + "SUN BOOLEAN,"
-                    + "PRIMARY KEY (staff_id),"
-                    + "FOREIGN KEY (staff_id) REFERENCES staff(staff_id)"
-                    + ")");
-            System.out.println("Table 'week4' created");
-        }
-        if (!tables.contains("week5")) {
-            jdbcTemplate.execute("CREATE TABLE week5 ("
-                    + "staff_id VARCHAR(22) NOT NULL,"
-                    + "MON BOOLEAN,"
-                    + "TUE BOOLEAN,"
-                    + "WED BOOLEAN,"
-                    + "THU BOOLEAN,"
-                    + "FRI BOOLEAN,"
-                    + "SAT BOOLEAN,"
-                    + "SUN BOOLEAN,"
-                    + "PRIMARY KEY (staff_id),"
-                    + "FOREIGN KEY (staff_id) REFERENCES staff(staff_id)"
-                    + ")");
-            System.out.println("Table 'week5' created");
-        }
-        if (!tables.contains("registered")){
+    }
+    
+    private void createRegisteredTable() {
+        if (!tableExists("registered")) {
             jdbcTemplate.execute("CREATE TABLE registered ("
                     + "staff_id VARCHAR(22) NOT NULL,"
                     + "date DATE NOT NULL,"
@@ -164,7 +90,10 @@ public class TableLoader {
                     + ")");
             System.out.println("Table 'registered' created");
         }
-        if (!tables.contains("unregistered")){
+    }
+    
+    private void createUnregisteredTable() {
+        if (!tableExists("unregistered")) {
             jdbcTemplate.execute("CREATE TABLE unregistered ("
                     + "staff_id VARCHAR(22) NOT NULL,"
                     + "date DATE NOT NULL,"
@@ -173,5 +102,10 @@ public class TableLoader {
                     + ")");
             System.out.println("Table 'unregistered' created");
         }
+    }
+    
+    private boolean tableExists(String tableName) {
+        List<String> tables = jdbcTemplate.queryForList("SHOW TABLES", String.class);
+        return tables.contains(tableName);
     }
 }

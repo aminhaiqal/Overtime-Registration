@@ -15,11 +15,11 @@ import com.example.demo.config.DataSourceConfig;
 public class weekDAO {
     JdbcTemplate jdbcTemplate = new JdbcTemplate(DataSourceConfig.getDataSource());
 
-    // Insert week into week table
-    public int insertWeek(week week) {
+    // Insert week into week1, week2, week3, week4, week5 table respectively
+    public int insertWeek(int weeknum, week week) {
         try {
-            String sql = "INSERT INTO week (staff_id, MON, TUE, WED, THU, FRI, SAT, SUN) VALUES (?,?,?,?,?,?,?,?)";
-            Object[] params = { week.getStaff_id(), week.getMonday(), week.getTuesday(), week.getWednesday(), week.getThursday(), week.getFriday(), week.getSaturday(), week.getSunday() };
+            String sql = "INSERT INTO week" + weeknum + "(staff_id, FirstDay, SecondDay, ThirdDay, FourthDay, FifthDay, SixthDay, SeventhDay) VALUES (?,?,?,?,?,?,?,?)";
+            Object[] params = { week.getStaff_id(), week.getFirstDay(), week.getSecondDay(), week.getThirdDay(), week.getFourthDay(), week.getFifthDay(), week.getSixthDay(), week.getSeventhDay() };
             return jdbcTemplate.update(sql, params);
             
         } catch (DuplicateKeyException e) {
@@ -27,13 +27,12 @@ public class weekDAO {
         } 
     }
 
-
     // Get week from week table
-    public List<week>getweekList() {
+    public List<week>getweekList(int weeknum) {
         List<week>weeklist = new ArrayList<week>();
         
         try {
-            String sql = "SELECT * FROM week";
+            String sql = "SELECT * FROM week" + weeknum;
             weeklist = jdbcTemplate.query(sql, new BeanPropertyRowMapper<week>(week.class));
             
         } catch (Exception e) {

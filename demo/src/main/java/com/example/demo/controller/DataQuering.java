@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,10 @@ public class DataQuering {
     @GetMapping("/week")
     @ResponseBody
     public List<week> getweek() {
-        List<week> weekList = weekDAO.getweekList();
+        List<week> weekList = new ArrayList<>();
+        for (int i = 1; i <= 5; i++) {
+            weekList.addAll(weekDAO.getweekList(i));
+        }
         return weekList;
     }
 

@@ -8,20 +8,21 @@ import com.example.demo.model.week;
 @Controller
 public class AssignString {
     public AssignString() {}
-    public AssignString(String[] result){
-        staff staff = new staff(result[0], result[1], result[4], result[2]);
-        System.out.println(result[0] + " " + result[1] + " " + result[4] + " " + result[2]);
-        week week1 = new week(result[0], parseBoolean(result[5]), parseBoolean(result[6]), parseBoolean(result[7]), parseBoolean(result[8]), parseBoolean(result[9]), parseBoolean(result[10]), parseBoolean(result[11]));
-        week week2 = new week(result[0], parseBoolean(result[12]), parseBoolean(result[13]), parseBoolean(result[14]), parseBoolean(result[15]), parseBoolean(result[16]), parseBoolean(result[17]), parseBoolean(result[18]));
-        week week3 = new week(result[0], parseBoolean(result[19]), parseBoolean(result[20]), parseBoolean(result[21]), parseBoolean(result[22]), parseBoolean(result[23]), parseBoolean(result[24]), parseBoolean(result[25]));
-        week week4 = new week(result[0], parseBoolean(result[26]), parseBoolean(result[27]), parseBoolean(result[28]), parseBoolean(result[29]), parseBoolean(result[30]), parseBoolean(result[31]), parseBoolean(result[32]));
-        week week5 = new week(result[0], parseBoolean(result[33]), parseBoolean(result[34]), parseBoolean(result[35]), parseBoolean(result[36]), parseBoolean(result[37]), parseBoolean(result[38]), parseBoolean(result[39]));
-        
-        week[] weeks = {week1, week2, week3, week4, week5};
-        new DataLoading(staff, weeks);
+    public AssignString(String[][] data){
+        for (int i = 1; i < data.length; i++) {
+            staff staff = new staff(data[i][0], data[i][1], data[i][4], data[i][2]);
+            week week1 = new week(data[i][0], parseBoolean(data[i][5]), parseBoolean(data[i][6]), parseBoolean(data[i][7]), parseBoolean(data[i][8]), parseBoolean(data[i][9]), parseBoolean(data[i][10]), parseBoolean(data[i][11]));
+            week week2 = new week(data[i][0], parseBoolean(data[i][12]), parseBoolean(data[i][13]), parseBoolean(data[i][14]), parseBoolean(data[i][15]), parseBoolean(data[i][16]), parseBoolean(data[i][17]), parseBoolean(data[i][18]));
+            week week3 = new week(data[i][0], parseBoolean(data[i][19]), parseBoolean(data[i][20]), parseBoolean(data[i][21]), parseBoolean(data[i][22]), parseBoolean(data[i][23]), parseBoolean(data[i][24]), parseBoolean(data[i][25]));
+            week week4 = new week(data[i][0], parseBoolean(data[i][26]), parseBoolean(data[i][27]), parseBoolean(data[i][28]), parseBoolean(data[i][29]), parseBoolean(data[i][30]), parseBoolean(data[i][31]), parseBoolean(data[i][32]));
+            week week5 = new week(data[i][0], parseBoolean(data[i][33]), parseBoolean(data[i][34]), parseBoolean(data[i][35]), false, false, false, false);
+            
+            week[] weeks = {week1, week2, week3, week4, week5};
+            new DataLoading(staff, weeks);
+        }
     }
 
     public boolean parseBoolean(String s) {
-        return s != null && !s.isEmpty() && Double.parseDouble(s) != 0.0;
+        return "1".equals(s);
     }
 }

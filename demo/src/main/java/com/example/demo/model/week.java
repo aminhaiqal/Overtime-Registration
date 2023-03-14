@@ -2,23 +2,23 @@ package com.example.demo.model;
 
 public class week {
     public String staff_id;
-    public Boolean Monday;
-    public Boolean Tuesday;
-    public Boolean Wednesday;
-    public Boolean Thursday;
-    public Boolean Friday;
-    public Boolean Saturday;
-    public Boolean Sunday;
+    public Boolean FirstDay;
+    public Boolean SecondDay;
+    public Boolean ThirdDay;
+    public Boolean FourthDay;
+    public Boolean FifthDay;
+    public Boolean SixthDay;
+    public Boolean SeventhDay;
 
-    public week(String staff_id, Boolean Monday, Boolean Tuesday, Boolean Wednesday, Boolean Thursday, Boolean Friday, Boolean Saturday, Boolean Sunday) {
+    public week(String staff_id, Boolean FirstDay, Boolean SecondDay, Boolean ThirdDay, Boolean FourthDay, Boolean FifthDay, Boolean SixthDay, Boolean SeventhDay) {
         this.staff_id = staff_id;
-        this.Monday = Monday;
-        this.Tuesday = Tuesday;
-        this.Wednesday = Wednesday;
-        this.Thursday = Thursday;
-        this.Friday = Friday;
-        this.Saturday = Saturday;
-        this.Sunday = Sunday;
+        this.FirstDay = FirstDay;
+        this.SecondDay = SecondDay;
+        this.ThirdDay = ThirdDay;
+        this.FourthDay = FourthDay;
+        this.FifthDay = FifthDay;
+        this.SixthDay = SixthDay;
+        this.SeventhDay = SeventhDay;
     }
 
     public String getStaff_id() {
@@ -27,46 +27,46 @@ public class week {
     public void setStaff_id(String staff_id) {
         this.staff_id = staff_id;
     }
-    public Boolean getMonday() {
-        return Monday;
+    public Boolean getFirstDay() {
+        return FirstDay;
     }
-    public void setMonday(Boolean monday) {
-        Monday = monday;
+    public void setFirstDay(Boolean FirstDay) {
+        this.FirstDay = FirstDay;
     }
-    public Boolean getTuesday() {
-        return Tuesday;
+    public Boolean getSecondDay() {
+        return SecondDay;
     }
-    public void setTuesday(Boolean tuesday) {
-        Tuesday = tuesday;
+    public void setSecondDay(Boolean SecondDay) {
+        this.SecondDay = SecondDay;
     }
-    public Boolean getWednesday() {
-        return Wednesday;
+    public Boolean getThirdDay() {
+        return ThirdDay;
     }
-    public void setWednesday(Boolean wednesday) {
-        Wednesday = wednesday;
+    public void setThirdDay(Boolean ThirdDay) {
+        this.ThirdDay = ThirdDay;
     }
-    public Boolean getThursday() {
-        return Thursday;
+    public Boolean getFourthDay() {
+        return FourthDay;
     }
-    public void setThursday(Boolean thursday) {
-        Thursday = thursday;
+    public void setFourthDay(Boolean FourthDay) {
+        this.FourthDay = FourthDay;
     }
-    public Boolean getFriday() {
-        return Friday;
+    public Boolean getFifthDay() {
+        return FifthDay;
     }
-    public void setFriday(Boolean friday) {
-        Friday = friday;
+    public void setFifthDay(Boolean FifthDay) {
+        this.FifthDay = FifthDay;
     }
-    public Boolean getSaturday() {
-        return Saturday;
+    public Boolean getSixthDay() {
+        return SixthDay;
     }
-    public void setSaturday(Boolean saturday) {
-        Saturday = saturday;
+    public void setSixthDay(Boolean SixthDay) {
+        this.SixthDay = SixthDay;
     }
-    public Boolean getSunday() {
-        return Sunday;
+    public Boolean getSeventhDay() {
+        return SeventhDay;
     }
-    public void setSunday(Boolean sunday) {
-        Sunday = sunday;
+    public void setSeventhDay(Boolean SeventhDay) {
+        this.SeventhDay = SeventhDay;
     }
 }

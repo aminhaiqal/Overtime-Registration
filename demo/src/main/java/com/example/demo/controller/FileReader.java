@@ -7,14 +7,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.usermodel.CellType;
 
 /*
  * _____________________________________________________________________________
@@ -36,10 +35,9 @@ public class FileReader {
     @PostMapping("/upload")
     @ResponseBody
     public void readExcelFile(@RequestParam("file") MultipartFile file) throws IOException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         // Read the Excel file using Apache POI
         Workbook workbook = WorkbookFactory.create(file.getInputStream());
-        Sheet sheet = workbook.getSheetAt(0);
+        Sheet sheet = workbook.getSheetAt(1);
     
         int firstRowNum = sheet.getFirstRowNum();
         int lastRowNum = sheet.getLastRowNum();
@@ -56,7 +54,17 @@ public class FileReader {
                 if (cell == null) {
                     data[i - firstRowNum][j] = null; // Assign null to empty cells
                 } else {
-                    String cellValue = cell != null ? cell.toString() : null;
+                    String cellValue;
+                    if (cell.getCellType() == CellType.NUMERIC) {
+                        double numericValue = cell.getNumericCellValue();
+                        if (numericValue == Math.floor(numericValue)) {
+                            cellValue = String.format("%.0f", numericValue);
+                        } else {
+                            cellValue = String.valueOf(numericValue);
+                        }
+                    } else {
+                        cellValue = cell.toString();
+                    }
                     data[i - firstRowNum][j] = cellValue;
                 }
             }
@@ -64,9 +72,11 @@ public class FileReader {
     
         workbook.close();
     
-        // Now you can use the "data" array which contains the values of each cell
-        // For example, to print the value of the cell in the second row and third column:
+        /*System.out.println(data[1][0]);
         System.out.println(data[1][1]);
+        System.out.println(data[1][2]);
+        System.out.println(data[1][4]);*/
+        new AssignString(data);
     }
 
 }
